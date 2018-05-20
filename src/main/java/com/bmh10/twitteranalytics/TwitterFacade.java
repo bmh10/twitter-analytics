@@ -1,5 +1,7 @@
 package com.bmh10.twitteranalytics;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import twitter4j.*;
 
 public class TwitterFacade {
@@ -43,12 +45,7 @@ public class TwitterFacade {
     }
 
     private void printUser(User user) {
-        System.out.println(String.format(
-                "@%s - %s - %s",
-                user.getScreenName(),
-                user.getName(),
-                user.getDescription()
-        ));
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        System.out.println(gson.toJson(user));
     }
-
 }
