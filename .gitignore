@@ -2,5 +2,7 @@
 *.iml
 target*
 data/*
+build*
 .gradle*
 gradle*
+twitter4j.properties
