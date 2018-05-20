@@ -4,23 +4,51 @@ import twitter4j.*;
 
 public class TwitterFacade {
 
-    public static void main(String[] args) {
+    private Twitter twitter;
+    private String memberName;
+
+    public TwitterFacade(String memberName) {
+        this.memberName = memberName;
+        twitter = new TwitterFactory().getInstance();
+    }
+
+    public void printAllUserInfo() {
+        System.out.println("BASIC INFO");
+        printBasicUserInfo();
+        System.out.println("FRIENDS INFO");
+        printUserFriendInfo();
+    }
+
+    public void printUserFriendInfo() {
         try {
-            Twitter twitter = new TwitterFactory().getInstance();
             long cursor = -1;
             PagableResponseList<User> friends;
             do {
-                friends = twitter.getFriendsList("realDonaldTrump", cursor, 200);
-                for (User friend : friends) {
-                    System.out.println("@" + friend.getScreenName());
-                }
+                friends = twitter.getFriendsList(memberName, cursor, 200);
+                friends.forEach(this::printUser);
             } while ((cursor = friends.getNextCursor()) != 0);
 
         } catch (TwitterException te) {
             te.printStackTrace();
-            System.out.println("Failed to lookup friendships: " + te.getMessage());
-            System.exit(-1);
         }
+    }
+
+    public void printBasicUserInfo() {
+        try {
+            User user = twitter.showUser(memberName);
+            printUser(user);
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void printUser(User user) {
+        System.out.println(String.format(
+                "@%s - %s - %s",
+                user.getScreenName(),
+                user.getName(),
+                user.getDescription()
+        ));
     }
 
 }
