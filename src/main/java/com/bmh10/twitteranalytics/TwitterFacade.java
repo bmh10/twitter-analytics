@@ -55,7 +55,6 @@ public class TwitterFacade {
         } catch (TwitterException e) {
             e.printStackTrace();
         }
-
     }
 
     private void printUser(User user) {
