@@ -8,10 +8,12 @@ public class TwitterFacade {
 
     private Twitter twitter;
     private String memberName;
+    private Gson gson;
 
     public TwitterFacade(String memberName) {
         this.memberName = memberName;
-        twitter = new TwitterFactory().getInstance();
+        this.twitter = new TwitterFactory().getInstance();
+        this.gson = new GsonBuilder().setPrettyPrinting().create();
     }
 
     public void printAllUserInfo() {
@@ -19,6 +21,17 @@ public class TwitterFacade {
         printBasicUserInfo();
         System.out.println("FRIENDS INFO");
         printUserFriendInfo();
+        System.out.println("STATUS INFO");
+        printUserStatuses();
+    }
+
+    public void printBasicUserInfo() {
+        try {
+            User user = twitter.showUser(memberName);
+            printUser(user);
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
     }
 
     public void printUserFriendInfo() {
@@ -35,17 +48,21 @@ public class TwitterFacade {
         }
     }
 
-    public void printBasicUserInfo() {
+    public void printUserStatuses() {
         try {
-            User user = twitter.showUser(memberName);
-            printUser(user);
+            ResponseList<Status> statuses = twitter.getUserTimeline(memberName);
+            statuses.forEach(this::printStatus);
         } catch (TwitterException e) {
             e.printStackTrace();
         }
+
     }
 
     private void printUser(User user) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         System.out.println(gson.toJson(user));
+    }
+
+    private void printStatus(Status status) {
+        System.out.println(gson.toJson(status));
     }
 }
