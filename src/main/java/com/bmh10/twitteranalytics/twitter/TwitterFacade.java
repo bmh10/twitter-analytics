@@ -1,4 +1,4 @@
-package com.bmh10.twitteranalytics;
+package com.bmh10.twitteranalytics.twitter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -1,4 +1,4 @@
-package com.bmh10.twitteranalytics;
+package com.bmh10.twitteranalytics.twitter;
 
 public class Main {
 
