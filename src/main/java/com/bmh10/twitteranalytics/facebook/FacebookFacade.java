@@ -21,6 +21,10 @@ public class FacebookFacade {
     public ResponseList<User> getUsers(String query) throws FacebookException {
         return facebook.searchUsers(query);
     }
+
+    public ResponseList<Post> getPosts(String query) throws FacebookException {
+        return facebook.searchPosts(query);
+    }
 }
 
 
