@@ -25,6 +25,11 @@ public class FacebookFacade {
     public ResponseList<Post> getPosts(String query) throws FacebookException {
         return facebook.searchPosts(query);
     }
+
+    public ResponseList<Place> searchPlaces(
+            String query, double longitude, double latitude, int distance) throws FacebookException {
+        return facebook.searchPlaces(query, new GeoLocation(longitude, latitude), distance);
+    }
 }
 
 
