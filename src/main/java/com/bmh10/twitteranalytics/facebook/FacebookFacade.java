@@ -1,7 +1,6 @@
 package com.bmh10.twitteranalytics.facebook;
 
-import facebook4j.Facebook;
-import facebook4j.FacebookFactory;
+import facebook4j.*;
 import facebook4j.auth.AccessToken;
 
 public class FacebookFacade {
@@ -18,4 +17,10 @@ public class FacebookFacade {
         facebook.setOAuthPermissions(permissions);
         facebook.setOAuthAccessToken(new AccessToken(accessToken, null));
     }
+
+    public ResponseList<User> getUsers(String query) throws FacebookException {
+        return facebook.searchUsers(query);
+    }
 }
+
+
